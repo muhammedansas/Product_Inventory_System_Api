@@ -35,6 +35,7 @@
 1. Clone the repository:
 
    ```bash
+   https://github.com/muhammedansas/Product_Inventory_System_Api.git
   
 
 2. Create a Virtual Environment:
