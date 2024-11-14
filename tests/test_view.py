@@ -6,7 +6,7 @@ from authentication.models import User
 
 class RegisterViewTest(APITestCase):
     def setUp(self):
-        self.url = reverse('register')  
+        self.url = reverse('regiser')  
         
     def test_register_user(self):
         data = {

@@ -48,7 +48,22 @@
 3. Install Dependencies:
 
    ```bash
-   pip install -r requirements.txt
+  pip install -r requirements.txt
+
+4.  Run Migrations:
+  python manage.py migrate
+
+5. Create a Superuser:
+  python manage.py createsuperuser
+
+6. Start the Development Server:
+  python manage.py runserver
+
+
+## Running Tests:
+
+  python manage.py test
+
 
    
 
