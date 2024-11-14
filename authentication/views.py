@@ -2,14 +2,12 @@ from django.shortcuts import render
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.permissions import AllowAny
+from rest_framework_simplejwt.views import TokenObtainPairView
 from . models import User
 from rest_framework import status
-from . serializer import UserRegisterSerializer
+from . serializer import UserRegisterSerializer,MyTokenObtainPairSerializer
 
 # Create your views here.
-
-def home(request):
-    pass
 
 
 class UserRegistration(APIView):
@@ -26,3 +24,7 @@ class UserRegistration(APIView):
             )
             return Response({"message":"Registration Successfully completed"},status=status.HTTP_201_CREATED)
         return Response({"message":serializer.errors},status=status.HTTP_400_BAD_REQUEST)
+    
+
+class MyTokenObtainPairView(TokenObtainPairView):
+    serializer_class = MyTokenObtainPairSerializer

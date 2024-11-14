@@ -1,25 +1,40 @@
 from rest_framework import serializers
 from . models import User
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
 class UserRegisterSerializer(serializers.ModelSerializer):
-    password2 = serializers.CharField(style={'input_type':'password'},write_only=True)
+    confirm_password = serializers.CharField(style={'input_type':'password'},write_only=True)
 
     class Meta:
         model = User
-        fields = ['username','first_name','last_name','email','password','password2']
+        fields = ['username','first_name','last_name','email','password','confirm_password']
 
 
     def validate(self,data):
         password = data.get('password')
-        password2 = data.get('password2')
+        confirm_password = data.get('confirm_password')
+        username = data.get('username')
 
-        # length = len(password)
+        length = len(password)
 
-        # if length<8:
-        #     raise serializers.ValidationError({'password8':'Password must need 8 charecters'})
+        if length<8:
+            raise serializers.ValidationError({'error':'Password must need 8 charecters'})
             
-        # if password != password2:
-        #     raise serializers.ValidationError({'password_error':'password doesnt match'})
-            
-            
+        if password != confirm_password:
+            raise serializers.ValidationError({'error':'password doesnt match'})
+        
+        if User.objects.filter(username=username).exists():
+            raise serializers.ValidationError({'error': 'Username is already taken'})
+        
         return data
+    
+
+class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
+    @classmethod
+    def get_token(cls, user):
+        token = super().get_token(user)  
+        token['username'] = user.username
+        token['email'] = user.email  
+        token['is_admin'] = user.is_admin
+        return token
+    
