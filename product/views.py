@@ -22,7 +22,7 @@ class ProductView(APIView):
             return Response({"errors":"Products not found"}) 
         
         user_serializer = UserSerializer(user) 
-        product_serializer = ProductSerializer(obj,many=True)
+        product_serializer = ProductSerializer(obj,many=True) 
         return Response({
             'user': user_serializer.data,
             'products': product_serializer.data
