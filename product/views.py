@@ -21,7 +21,7 @@ class ProductView(APIView):
         except Products.DoesNotExist:
             return Response({"errors":"Products not found"}) 
         
-        user_serializer = UserSerializer(user)
+        user_serializer = UserSerializer(user) 
         product_serializer = ProductSerializer(obj,many=True)
         return Response({
             'user': user_serializer.data,
